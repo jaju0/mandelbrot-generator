@@ -22,3 +22,7 @@ add_executable(${PROJECT_NAME}
     src/Image.cpp
     src/main.cpp
 )
+
+target_link_libraries(${PROJECT_NAME}
+    jpeg
+)
