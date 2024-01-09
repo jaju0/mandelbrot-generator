@@ -13,5 +13,12 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 project(mandelbrot_generator)
 
 add_executable(${PROJECT_NAME}
+    src/error.cpp
+    src/ColoringStrategies/ColoringStrategyBasicDistanceEstimation.cpp
+    src/EscapeTimeAlgos/EscapeTimeAlgoDistanceEstimation.cpp
+    src/EscapeTimeAlgos/EscapeTimeAlgoIterationOnly.cpp
+    src/Calculator.cpp
+    src/Generator.cpp
+    src/Image.cpp
     src/main.cpp
 )
