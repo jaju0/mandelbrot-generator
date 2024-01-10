@@ -7,6 +7,7 @@
 #include <memory>
 #include <mutex>
 #include <boost/asio/io_context.hpp>
+#include <boost/numeric/ublas/vector.hpp>
 
 #include "EscapeTimeAlgo.hpp"
 
@@ -52,12 +53,8 @@ private:
     void task(uint32_t yCoordFrom, uint32_t yCoordTo);
     void task_copyPixelsToResult(uint32_t yCoordFrom, uint32_t yCoordTo, std::vector<Pixel>& pixels);
 
-    /**
-     * Returns:
-     * - <0> (long double) mapped x coordiante
-     * - <1> (long double) mapped y coordinate
-     */
-    std::tuple<long double, long double> mapCoordinates(uint32_t px, uint32_t py);
+
+    boost::numeric::ublas::vector<long double> mapCoordinates(uint32_t px, uint32_t py);
 
     boost::asio::io_context& m_ioc;
     uint32_t m_numberOfTasks;

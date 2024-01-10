@@ -88,8 +88,8 @@ void Calculator::task(uint32_t yCoordFrom, uint32_t yCoordTo)
         for(uint32_t px = 0; px < m_params.pixelsX; ++px)
         {
             auto mappedCoords = mapCoordinates(px, py);
-            long double cx = std::get<0>(mappedCoords);
-            long double cy = std::get<1>(mappedCoords);
+            long double cx = mappedCoords(0);
+            long double cy = mappedCoords(1);
             std::complex<long double> c { cx, cy };
 
             auto iterationResult = m_pEscapeTimeAlgo->iterate(c);
@@ -114,15 +114,20 @@ void Calculator::task_copyPixelsToResult(uint32_t yCoordFrom, uint32_t yCoordTo,
     }
 }
 
-std::tuple<long double, long double> Calculator::mapCoordinates(uint32_t px, uint32_t py)
+boost::numeric::ublas::vector<long double> Calculator::mapCoordinates(uint32_t px, uint32_t py)
 {
+    using Vector = boost::numeric::ublas::vector<long double>;
+    Vector result(2);
+
     long double xRatio = static_cast<long double>(px) / static_cast<long double>(m_params.pixelsX);
     long double x = xRatio * (m_params.maxReal-m_params.minReal) + m_params.minReal;
+    result(0) = x;
 
     long double yRatio = static_cast<long double>(py) / static_cast<long double>(m_params.pixelsY);
     long double y = -(yRatio * (m_params.maxImag-m_params.minImag) + m_params.minImag);
+    result(1) = y;
 
-    return {x, y};
+    return result;
 }
 
 
