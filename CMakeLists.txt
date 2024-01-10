@@ -12,6 +12,9 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 project(mandelbrot_generator)
 
+find_package(Boost 1.82 REQUIRED)
+find_package(JPEG REQUIRED)
+
 add_executable(${PROJECT_NAME}
     src/error.cpp
     src/ColoringStrategies/ColoringStrategyBasicDistanceEstimation.cpp
