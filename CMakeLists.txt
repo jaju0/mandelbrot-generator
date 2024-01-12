@@ -20,9 +20,12 @@ add_executable(${PROJECT_NAME}
     src/ColoringStrategies/ColoringStrategyBasicDistanceEstimation.cpp
     src/EscapeTimeAlgos/EscapeTimeAlgoDistanceEstimation.cpp
     src/EscapeTimeAlgos/EscapeTimeAlgoIterationOnly.cpp
+    src/GeneratingStrategy.cpp
+    src/GeneratingStrategies/GeneratingStrategyRandomZoom.cpp
     src/Calculator.cpp
     src/Generator.cpp
     src/Image.cpp
+    src/Data.cpp
     src/main.cpp
 )
 
