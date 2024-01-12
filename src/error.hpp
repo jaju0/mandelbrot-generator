@@ -9,6 +9,7 @@ namespace mandelbrot {
 enum class error
 {
     precision_issue = 1,
+    no_random_zoom_coordinate,
 };
 
 class category_impl : public std::error_category

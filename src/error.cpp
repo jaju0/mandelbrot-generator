@@ -19,6 +19,8 @@ std::string category_impl::message(int ev) const
     {
     case error::precision_issue:
         return "precision issue";
+    case error::no_random_zoom_coordinate:
+        return "no random zoom coordinate";
     default:
         return "unknown error";
     }
