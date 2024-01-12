@@ -1,3 +1,4 @@
+#include "helper.hpp"
 #include "Calculator.hpp"
 
 namespace mandelbrot {
@@ -87,9 +88,8 @@ void Calculator::task(uint32_t yCoordFrom, uint32_t yCoordTo)
         uint32_t relY = py-yCoordFrom;
         for(uint32_t px = 0; px < m_params.pixelsX; ++px)
         {
-            auto mappedCoords = mapCoordinates(px, py);
-            long double cx = mappedCoords(0);
-            long double cy = mappedCoords(1);
+            long double cx = helper::map(static_cast<long double>(px), 0.0L, static_cast<long double>(m_params.pixelsX), m_params.minReal, m_params.maxReal);
+            long double cy = helper::map(static_cast<long double>(py), 0.0L, static_cast<long double>(m_params.pixelsY), m_params.minImag, m_params.maxImag);
             std::complex<long double> c { cx, cy };
 
             auto iterationResult = m_pEscapeTimeAlgo->iterate(c);
@@ -112,22 +112,6 @@ void Calculator::task_copyPixelsToResult(uint32_t yCoordFrom, uint32_t yCoordTo,
         for(uint32_t px = 0; px < m_params.pixelsX; ++px)
             m_result.pixels[m_params.pixelsX * py + px] = std::move(pixels[m_params.pixelsX * relY + px]);
     }
-}
-
-boost::numeric::ublas::vector<long double> Calculator::mapCoordinates(uint32_t px, uint32_t py)
-{
-    using Vector = boost::numeric::ublas::vector<long double>;
-    Vector result(2);
-
-    long double xRatio = static_cast<long double>(px) / static_cast<long double>(m_params.pixelsX);
-    long double x = xRatio * (m_params.maxReal-m_params.minReal) + m_params.minReal;
-    result(0) = x;
-
-    long double yRatio = static_cast<long double>(py) / static_cast<long double>(m_params.pixelsY);
-    long double y = -(yRatio * (m_params.maxImag-m_params.minImag) + m_params.minImag);
-    result(1) = y;
-
-    return result;
 }
 
 

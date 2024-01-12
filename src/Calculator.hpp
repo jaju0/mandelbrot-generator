@@ -53,9 +53,6 @@ private:
     void task(uint32_t yCoordFrom, uint32_t yCoordTo);
     void task_copyPixelsToResult(uint32_t yCoordFrom, uint32_t yCoordTo, std::vector<Pixel>& pixels);
 
-
-    boost::numeric::ublas::vector<long double> mapCoordinates(uint32_t px, uint32_t py);
-
     boost::asio::io_context& m_ioc;
     uint32_t m_numberOfTasks;
     std::shared_ptr<EscapeTimeAlgo> m_pEscapeTimeAlgo;
