@@ -25,7 +25,7 @@ void GeneratingStrategyRandomZoom::initialize()
 
 std::error_code GeneratingStrategyRandomZoom::generate()
 {
-    using Vector = boost::numeric::ublas::vector<long double>;
+    using Vector = boost::numeric::ublas::vector<CalcType>;
 
     auto resetParams = [this] {
         m_currentZoomFactor = 1.3L;
@@ -59,9 +59,9 @@ std::error_code GeneratingStrategyRandomZoom::generate()
     return std::error_code();
 }
 
-std::optional<boost::numeric::ublas::vector<long double>> GeneratingStrategyRandomZoom::getRandomZoomCoordinate()
+std::optional<boost::numeric::ublas::vector<CalcType>> GeneratingStrategyRandomZoom::getRandomZoomCoordinate()
 {
-    using Vector = boost::numeric::ublas::vector<long double>;
+    using Vector = boost::numeric::ublas::vector<CalcType>;
     std::vector<Vector> zoomCoordinates = computeAllZoomCoordinates();
     if(zoomCoordinates.empty())
         return std::nullopt;
@@ -72,9 +72,9 @@ std::optional<boost::numeric::ublas::vector<long double>> GeneratingStrategyRand
     return zoomCoordinates[idist(rgen)];
 }
 
-std::vector<boost::numeric::ublas::vector<long double>> GeneratingStrategyRandomZoom::computeAllZoomCoordinates()
+std::vector<boost::numeric::ublas::vector<CalcType>> GeneratingStrategyRandomZoom::computeAllZoomCoordinates()
 {
-    using Vector = boost::numeric::ublas::vector<long double>;
+    using Vector = boost::numeric::ublas::vector<CalcType>;
 
     auto& result = m_pCalculator->getResult();
 
@@ -88,8 +88,8 @@ std::vector<boost::numeric::ublas::vector<long double>> GeneratingStrategyRandom
                 continue;
 
             Vector mappedCoordinate(2);
-            mappedCoordinate(0) = helper::map(static_cast<long double>(x), 0.0L, static_cast<long double>(result.params.pixelsX), result.params.minReal, result.params.maxReal);
-            mappedCoordinate(1) = helper::map(static_cast<long double>(y), 0.0L, static_cast<long double>(result.params.pixelsY), result.params.minImag, result.params.maxImag);
+            mappedCoordinate(0) = helper::map<CalcType>(static_cast<CalcType>(x), 0.0L, static_cast<CalcType>(result.params.pixelsX), result.params.minReal, result.params.maxReal);
+            mappedCoordinate(1) = helper::map<CalcType>(static_cast<CalcType>(y), 0.0L, static_cast<CalcType>(result.params.pixelsY), result.params.minImag, result.params.maxImag);
             coordinates.push_back(mappedCoordinate);
         }
     }

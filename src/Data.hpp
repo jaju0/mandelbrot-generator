@@ -18,7 +18,7 @@ private:
     boost::numeric::ublas::vector<uint32_t> m_size;
     uint32_t m_maxIterations;
     std::vector<uint32_t> m_iterations;
-    std::vector<long double> m_distanceEstimators;
+    std::vector<CalcType> m_distanceEstimators;
 };
 
 }

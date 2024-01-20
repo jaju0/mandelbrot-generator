@@ -6,9 +6,9 @@ EscapeTimeAlgoIterationOnly::EscapeTimeAlgoIterationOnly()
     : m_maxIterations(0)
 {}
 
-std::tuple<uint32_t, long double> EscapeTimeAlgoIterationOnly::iterate(std::complex<long double> c)
+std::tuple<uint32_t, CalcType> EscapeTimeAlgoIterationOnly::iterate(std::complex<CalcType> c)
 {
-    std::complex<long double> z, z2;
+    std::complex<CalcType> z, z2;
     std::uint32_t iterations = 0;
 
     while(z2.real() + z2.imag() <= 4.0L && iterations < m_maxIterations)

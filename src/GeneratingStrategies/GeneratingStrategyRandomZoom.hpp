@@ -17,12 +17,12 @@ public:
     virtual std::error_code generate() override;
 
 protected:
-    std::optional<boost::numeric::ublas::vector<long double>> getRandomZoomCoordinate();
-    std::vector<boost::numeric::ublas::vector<long double>> computeAllZoomCoordinates();
+    std::optional<boost::numeric::ublas::vector<CalcType>> getRandomZoomCoordinate();
+    std::vector<boost::numeric::ublas::vector<CalcType>> computeAllZoomCoordinates();
     bool isMandelbrotCoordOnEdge(uint32_t x, uint32_t y);
 
-    long double m_currentZoomFactor;
-    boost::numeric::ublas::vector<long double> m_currentZoomCenter;
+    CalcType m_currentZoomFactor;
+    boost::numeric::ublas::vector<CalcType> m_currentZoomCenter;
 };
 
 }

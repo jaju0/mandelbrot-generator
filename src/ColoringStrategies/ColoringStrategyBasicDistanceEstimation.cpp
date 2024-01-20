@@ -9,8 +9,8 @@ boost::gil::rgb8_pixel_t ColoringStrategyBasicDistanceEstimation::computePixel(C
     if(calcPixel.iterations == result.params.maxIterations)
         return {0, 0, 0};
     
-    long double pixelSize = (result.params.maxReal-result.params.minReal) / static_cast<long double>(result.params.pixelsX);
-    long double thickness = 0.08L;
+    CalcType pixelSize = (result.params.maxReal-result.params.minReal) / static_cast<CalcType>(result.params.pixelsX);
+    CalcType thickness = 0.08L;
 
     if(calcPixel.distanceEstimator < thickness*pixelSize)
         return {255, 0, 0};

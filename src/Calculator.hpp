@@ -9,6 +9,7 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 
+#include "types.hpp"
 #include "EscapeTimeAlgo.hpp"
 
 namespace mandelbrot {
@@ -19,22 +20,22 @@ public:
     struct Pixel
     {
         uint32_t iterations;
-        long double distanceEstimator;
+        CalcType distanceEstimator;
         Pixel();
-        Pixel(uint32_t iterations, long double distanceEstimator);
+        Pixel(uint32_t iterations, CalcType distanceEstimator);
     };
 
     struct Parameters
     {
         uint32_t pixelsX;
         uint32_t pixelsY;
-        long double minReal;
-        long double maxReal;
-        long double minImag;
-        long double maxImag;
+        CalcType minReal;
+        CalcType maxReal;
+        CalcType minImag;
+        CalcType maxImag;
         uint32_t maxIterations;
         Parameters();
-        Parameters(uint32_t pixelsX, uint32_t pixelsY, long double minReal, long double maxReal, long double minImag, long double maxImag, uint32_t maxIterations);
+        Parameters(uint32_t pixelsX, uint32_t pixelsY, CalcType minReal, CalcType maxReal, CalcType minImag, CalcType maxImag, uint32_t maxIterations);
     };
 
     struct Result

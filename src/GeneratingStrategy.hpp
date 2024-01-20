@@ -26,8 +26,8 @@ protected:
     boost::numeric::ublas::vector<uint32_t> m_imageSize;
     uint32_t m_maxIterations;
 
-    virtual std::error_code createImage(boost::numeric::ublas::vector<long double> zoomCenter, long double zoomFactor);
-    bool isPrecisionValid(long double min, long double max, uint32_t size);
+    virtual std::error_code createImage(boost::numeric::ublas::vector<CalcType> zoomCenter, CalcType zoomFactor);
+    bool isPrecisionValid(CalcType min, CalcType max, uint32_t size);
 };
 
 }

@@ -12,9 +12,9 @@ public:
     /**
      * Returns:
      * - <0> (uint32_t) iterations
-     * - <1> (long double) distanceEstimator
+     * - <1> (CalcType) distanceEstimator
      */
-    virtual std::tuple<uint32_t, long double> iterate(std::complex<long double> c) = 0;
+    virtual std::tuple<uint32_t, CalcType> iterate(std::complex<CalcType> c) = 0;
 };
 
 }

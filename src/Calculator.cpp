@@ -9,7 +9,7 @@ Calculator::Pixel::Pixel()
     , distanceEstimator(0.0)
 {}
 
-Calculator::Pixel::Pixel(uint32_t iterations, long double distanceEstimator)
+Calculator::Pixel::Pixel(uint32_t iterations, CalcType distanceEstimator)
     : iterations(iterations)
     , distanceEstimator(distanceEstimator)
 {}
@@ -24,7 +24,7 @@ Calculator::Parameters::Parameters()
     , maxIterations(0)
 {}
 
-Calculator::Parameters::Parameters(uint32_t pixelsX, uint32_t pixelsY, long double minReal, long double maxReal, long double minImag, long double maxImag, uint32_t maxIterations)
+Calculator::Parameters::Parameters(uint32_t pixelsX, uint32_t pixelsY, CalcType minReal, CalcType maxReal, CalcType minImag, CalcType maxImag, uint32_t maxIterations)
     : pixelsX(pixelsX)
     , pixelsY(pixelsY)
     , minReal(minReal)
@@ -92,13 +92,13 @@ void Calculator::task(uint32_t yCoordFrom, uint32_t yCoordTo)
         uint32_t relY = py-yCoordFrom;
         for(uint32_t px = 0; px < m_params.pixelsX; ++px)
         {
-            long double cx = helper::map(static_cast<long double>(px), 0.0L, static_cast<long double>(m_params.pixelsX), m_params.minReal, m_params.maxReal);
-            long double cy = helper::map(static_cast<long double>(py), 0.0L, static_cast<long double>(m_params.pixelsY), m_params.minImag, m_params.maxImag);
-            std::complex<long double> c { cx, cy };
+            CalcType cx = helper::map<CalcType>(static_cast<CalcType>(px), 0.0L, static_cast<CalcType>(m_params.pixelsX), m_params.minReal, m_params.maxReal);
+            CalcType cy = helper::map<CalcType>(static_cast<CalcType>(py), 0.0L, static_cast<CalcType>(m_params.pixelsY), m_params.minImag, m_params.maxImag);
+            std::complex<CalcType> c { cx, cy };
 
             auto iterationResult = m_pEscapeTimeAlgo->iterate(c);
             uint32_t iterations = std::get<0>(iterationResult);
-            long double distanceEstimator = std::get<1>(iterationResult);
+            CalcType distanceEstimator = std::get<1>(iterationResult);
 
             pixels[m_params.pixelsX * relY + px] = Pixel { iterations, distanceEstimator };
         }
