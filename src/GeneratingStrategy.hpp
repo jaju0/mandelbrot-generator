@@ -14,6 +14,7 @@ class GeneratingStrategy
 {
 public:
     GeneratingStrategy(boost::numeric::ublas::vector<uint32_t> imageSize, uint32_t maxIterations);
+    virtual void initialize() = 0;
     virtual std::error_code generate() = 0;
 
     void setCalculator(std::shared_ptr<Calculator> pCalculator);

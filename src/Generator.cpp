@@ -4,15 +4,16 @@
 
 namespace mandelbrot {
 
-Generator::Generator(uint32_t numberOfThreads, std::shared_ptr<GeneratingStrategy> pGeneratingStrategy, std::shared_ptr<EscapeTimeAlgo> pEscapeTimeAlgo)
+Generator::Generator(uint32_t numberOfThreads, std::shared_ptr<GeneratingStrategy> pGeneratingStrategy)
     : m_numberOfThreads(numberOfThreads)
     , m_availableThreads(m_numberOfThreads)
     , m_shouldTerminate(false)
     , m_pGeneratingStrategy(pGeneratingStrategy)
 {
-    m_pCalculator = std::make_shared<Calculator>(m_ioc, m_numberOfThreads, pEscapeTimeAlgo);
+    m_pCalculator = std::make_shared<Calculator>(m_ioc, m_numberOfThreads);
     m_pGeneratingStrategy->setCalculator(m_pCalculator);
     m_pGeneratingStrategy->setExecutionFunction(std::bind(&Generator::execute, this));
+    m_pGeneratingStrategy->initialize();
 
     for(uint32_t i = 0; i < m_numberOfThreads; ++i)
         m_threads.emplace_back(&Generator::threadLoop, this);

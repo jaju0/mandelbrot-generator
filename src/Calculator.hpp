@@ -44,7 +44,8 @@ public:
     };
 
 public:
-    Calculator(boost::asio::io_context& ioc, uint32_t numberOfTasks, std::shared_ptr<EscapeTimeAlgo> pEscapeTimeAlgo);
+    Calculator(boost::asio::io_context& ioc, uint32_t numberOfTasks);
+    void setEscapeTimeAlgo(std::shared_ptr<EscapeTimeAlgo> pEscapeTimeAlgo);
     void setParameters(Parameters params);
     void postTasks();
     Result& getResult();

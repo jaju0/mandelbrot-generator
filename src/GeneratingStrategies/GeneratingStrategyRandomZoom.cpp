@@ -2,6 +2,7 @@
 
 #include "../helper.hpp"
 #include "GeneratingStrategyRandomZoom.hpp"
+#include "../EscapeTimeAlgos/EscapeTimeAlgoDistanceEstimation.hpp"
 
 namespace mandelbrot {
 
@@ -12,6 +13,14 @@ GeneratingStrategyRandomZoom::GeneratingStrategyRandomZoom(boost::numeric::ublas
 {
     m_currentZoomCenter(0) = 0.0L;
     m_currentZoomCenter(1) = 0.0L;
+}
+
+void GeneratingStrategyRandomZoom::initialize()
+{
+    auto pEscapeTimeAlgo = std::make_shared<EscapeTimeAlgoDistanceEstimation>();
+    pEscapeTimeAlgo->setMaxIterations(m_maxIterations);
+
+    m_pCalculator->setEscapeTimeAlgo(pEscapeTimeAlgo);
 }
 
 std::error_code GeneratingStrategyRandomZoom::generate()

@@ -34,11 +34,15 @@ Calculator::Parameters::Parameters(uint32_t pixelsX, uint32_t pixelsY, long doub
     , maxIterations(maxIterations)
 {}
 
-Calculator::Calculator(boost::asio::io_context& ioc, uint32_t numberOfTasks, std::shared_ptr<EscapeTimeAlgo> pEscapeTimeAlgo)
+Calculator::Calculator(boost::asio::io_context& ioc, uint32_t numberOfTasks)
     : m_ioc(ioc)
     , m_numberOfTasks(numberOfTasks)
-    , m_pEscapeTimeAlgo(pEscapeTimeAlgo)
 {}
+
+void Calculator::setEscapeTimeAlgo(std::shared_ptr<EscapeTimeAlgo> pEscapeTimeAlgo)
+{
+    m_pEscapeTimeAlgo = pEscapeTimeAlgo;
+}
 
 void Calculator::setParameters(Parameters params)
 {

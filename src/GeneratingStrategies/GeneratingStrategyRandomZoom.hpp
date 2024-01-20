@@ -13,6 +13,7 @@ class GeneratingStrategyRandomZoom : public GeneratingStrategy
 {
 public:
     GeneratingStrategyRandomZoom(boost::numeric::ublas::vector<uint32_t> imageSize, uint32_t maxIterations);
+    virtual void initialize() override;
     virtual std::error_code generate() override;
 
 protected:

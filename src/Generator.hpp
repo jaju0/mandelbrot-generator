@@ -10,14 +10,13 @@
 #include "error.hpp"
 #include "Calculator.hpp"
 #include "GeneratingStrategy.hpp"
-#include "EscapeTimeAlgo.hpp"
 
 namespace mandelbrot {
 
 class Generator
 {
 public:
-    Generator(uint32_t numberOfThreads, std::shared_ptr<GeneratingStrategy> pGeneratingStrategy, std::shared_ptr<EscapeTimeAlgo> pEscapeTimeAlgo);
+    Generator(uint32_t numberOfThreads, std::shared_ptr<GeneratingStrategy> pGeneratingStrategy);
     void next();
     void exit();
 
