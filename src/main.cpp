@@ -4,7 +4,9 @@
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
+#include "Config.hpp"
 #include "Generator.hpp"
+#include "MySQLStore.hpp"
 #include "Image.hpp"
 #include "Data.hpp"
 #include "EscapeTimeAlgos/EscapeTimeAlgoDistanceEstimation.hpp"
@@ -26,20 +28,26 @@ int main()
     std::cout << "press ctrl+c to exit..." << std::endl;
     signal(SIGINT, signal_sigint);
 
-    uint32_t maxIterations = 1000;
-    VectorU32 imageSize(2);
-    imageSize(0) = 1920;
-    imageSize(1) = 1080;
+    mandelbrot::Config config("config.ini");
+    if(!config.readIniFile())
+    {
+        std::cerr << "abort" << std::endl;
+        return 1;
+    }
 
-    auto escapeTimeAlgo = std::make_shared<mandelbrot::EscapeTimeAlgoDistanceEstimation>();
-    auto generatingStrategy = std::make_shared<mandelbrot::GeneratingStrategyRandomZoom>(imageSize, 1000);
+    uint32_t maxIterations = config.getMaxIterations();
+    VectorU32 imageSize(2);
+    imageSize(0) = config.getWidth();
+    imageSize(1) = config.getHeight();
+
+    auto generatingStrategy = std::make_shared<mandelbrot::GeneratingStrategyRandomZoom>(imageSize, maxIterations);
     auto coloringStrategy = std::make_shared<mandelbrot::ColoringStrategyBasicDistanceEstimation>();
 
-    escapeTimeAlgo->setMaxIterations(maxIterations);
-
-    mandelbrot::Generator generator(std::thread::hardware_concurrency(), generatingStrategy, escapeTimeAlgo);
+    mandelbrot::Generator generator(std::thread::hardware_concurrency(), generatingStrategy);
+    mandelbrot::MySQLStore mysqlStore(config.getMysqlHostname(), config.getMysqlUsername(), config.getMysqlPassword(), config.getMysqlDatabase());
     boost::uuids::random_generator uuidGenerator;
 
+    mysqlStore.createImageTable()->waitForResult();
     while(!EXIT)
     {
         generator.next();
@@ -47,14 +55,17 @@ int main()
 
         std::string uuid = boost::uuids::to_string(uuidGenerator());
 
-        mandelbrot::Image image(result, imageSize(0), imageSize(1), coloringStrategy);
-        image.saveAsJPEG("images/" + uuid + ".jpg");
+        mysqlStore(mandelbrot::ImageInsertionParameters { result, uuid });
+
+        mandelbrot::Image image(result, config.getThumbnailWidth(), config.getThumbnailHeight(), coloringStrategy);
+        image.saveAsJPEG(config.getThumbnailDir() + uuid + ".jpg");
 
         mandelbrot::Data mandelbrotData(result);
-        mandelbrotData.saveToFile("data/" + uuid + ".gz");
+        mandelbrotData.saveToFile(config.getOutputDir() + uuid + ".gz");
     }
 
     generator.exit();
+    mysqlStore.exit();
 
     return 0;
 }
