@@ -22,6 +22,12 @@ add_executable(${PROJECT_NAME}
     src/EscapeTimeAlgos/EscapeTimeAlgoIterationOnly.cpp
     src/GeneratingStrategy.cpp
     src/GeneratingStrategies/GeneratingStrategyRandomZoom.cpp
+    src/MySQLQuery.cpp
+    src/MySQLQueries/MySQLQueryCreateImageTable.cpp
+    src/MySQLQueries/MySQLQueryInsertImage.cpp
+    src/MySQLQueryTypes.cpp
+    src/MySQLStore.cpp
+    src/Config.cpp
     src/Calculator.cpp
     src/Generator.cpp
     src/Image.cpp
@@ -30,6 +36,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
+    crypto
     jpeg
     boost_iostreams
 )
